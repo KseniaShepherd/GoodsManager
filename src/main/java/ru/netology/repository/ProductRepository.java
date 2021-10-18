@@ -21,4 +21,27 @@ public class ProductRepository {
     public Product[] findAll() {
         return products;
     }
+
+    public Product findById(int id) {
+        for (Product product : products) {
+            if (product.getId() == id) {
+                return product;
+            }
+        }
+        return null;
+    }
+
+    public void removeById(int id) {
+        int length = products.length - 1;
+        Product[] tmp = new Product[length];
+        int index = 0;
+        for (Product product : products) {
+            if (product.getId() != id) {
+                tmp[index] = product;
+                index++;
+            }
+        }
+        products = tmp;
+    }
 }
+

@@ -17,22 +17,17 @@ public class ProductManager {
     }
 
     public Product[] searchBy(String text) {
-        Product[] tmp = new Product[productRepository.findAll().length];
-        int foundBooksQuantity = 0;
-
+        Product[] result = new Product[0];
         for (Product product : productRepository.findAll()) {
             if (matches(product, text)) {
-                tmp[foundBooksQuantity] = product;
-                foundBooksQuantity++;
+                Product[] tmp = new Product[result.length + 1];
+                System.arraycopy(result, 0, tmp, 0, result.length);
+                tmp[tmp.length - 1] = product;
+                result = tmp;
             }
-        }
-        Product[] result = new Product[foundBooksQuantity];
-        for (int i = 0; i < foundBooksQuantity; i++) {
-            result[i] = tmp[i];
         }
         return result;
     }
-
     public boolean matches(Product product, String search) {
         if (product instanceof Book) {
             Book book = (Book) product;
